@@ -1,8 +1,6 @@
 import sqlite3
 
 def create_databases() -> None:
-    user_connection = sqlite3.connect("users.db")
-    users_cursor = user_connection.cursor()
     accounts_connection = sqlite3.connect("accounts.db")
     accounts_cursor = accounts_connection.cursor()
     transaction_connection = sqlite3.connect("transactions.db")
@@ -10,10 +8,7 @@ def create_databases() -> None:
     finished_transactions = sqlite3.connect("finished_transactions.db")
     finished = finished_transactions.cursor()
 
-    users_cursor.execute(
-        """CREATE TABLE IF NOT EXISTS users (user_id BIGINT, bank_sender TEXT, first_name TEXT, last_name TEXT)"""
-                        )
-    user_connection.commit()
+    
     accounts_cursor.execute("""CREATE TABLE IF NOT EXISTS accounts (user_id BIGINT, account_number BIGINT, account_balance DOUBLE(7, 2),
                             account_type TEXT, bank_sender TEXT)"""
                             )
