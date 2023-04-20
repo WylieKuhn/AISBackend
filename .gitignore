@@ -6,3 +6,5 @@ accounts.db
 *.db
 
 test.py
+
+alter.py
