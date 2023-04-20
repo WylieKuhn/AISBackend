@@ -1,19 +1,19 @@
 import sqlite3
 import time
 
-accounts_connection = sqlite3.connect("accounts.db", check_same_thread=False)
+accounts_connection = sqlite3.connect("accounts.db")
 accounts_cursor = accounts_connection.cursor()
 
-finished_transactions = sqlite3.connect("finished_transactions.db", check_same_thread=False)
+finished_transactions = sqlite3.connect("finished_transactions.db")
 finished = finished_transactions.cursor()
 
-sender_dastabase_connection = sqlite3.connect("sender_transactions.db", check_same_thread=False)
+sender_dastabase_connection = sqlite3.connect("sender_transactions.db")
 sender_database_cursor = sender_dastabase_connection.cursor()
 
-receiver_dastabase_connection = sqlite3.connect("receiver_transactions.db", check_same_thread=False)
+receiver_dastabase_connection = sqlite3.connect("receiver_transactions.db")
 receiver_database_cursor = receiver_dastabase_connection.cursor()
 
-error_database_connection = sqlite3.connect("error_database.db", check_same_thread=False)
+error_database_connection = sqlite3.connect("error_database.db")
 error_database_cursor = error_database_connection.cursor()
 
 
@@ -23,6 +23,7 @@ def complete_transactions():
     receiver_database_cursor.execute("""SELECT * FROM received_transactions""")
     received_transactions = receiver_database_cursor.fetchall()
     sent_transactions = sender_database_cursor.execute("""SELECT * FROM sent_transactions""")
+    
     
     for receieved_transaction in received_transactions:
         for sent_transaction in sent_transactions:
@@ -69,7 +70,7 @@ def complete_transactions():
                     finished.execute(F"""INSERT INTO finished_transactions (account_number_sender, account_number_receiver,
                                         transaction_timestamp, transfer_amount, beginning_balance_sender, bank_sender, os_sender, os_receiver,
                                         unanimous_agreement, transaction_error) VALUES ({int(sender_account_info[0])}, {int(receiver_account_info[0])}, 
-                                        '{timestamp}', {float(sent_transaction[1])}, {receiver_balance}, '{str(sender_account_info[4])}',
+                                        '{timestamp}', {float(paid_amount)}, {receiver_balance}, '{str(sender_account_info[4])}',
                                         '{sent_transaction[3]}', '{receieved_transaction[4]}', 1, 0)""")
                     finished_transactions.commit()
                     
@@ -83,24 +84,25 @@ def complete_transactions():
                     print(f"COMPLETED TRANSACTION {receiver_key}")
                 
                 #deny and log error if balance is not enough to cover paid amount
-                elif sender_balance > paid_amount:
+                elif sender_balance < paid_amount:
+                    print(f"TRANSACTION FAILURE DUE TO ATTEMPTED OVERDRAW: {sender_key}")
                     receiver_balance = float(receiver_account_info[2])
                     error = "ATTEMPTED OVERDRAW: Paid amount exceeds balance"
 
                     #insert final permanent trasaction record into the finished transactions databse
                     error_database_cursor.execute(F"""INSERT INTO errors (account_number_sender, account_number_receiver,
                                         transaction_timestamp, transfer_amount, beginning_balance_sender, bank_sender, os_sender, os_receiver,
-                                        unanimous_agreement, transaction_error, error_explanation) VALUES ({int(sender_account_info[0])}, {int(receiver_account_info[0])}, 
-                                        '{timestamp}', {float(sent_transaction[1])}, {receiver_balance}, '{str(sender_account_info[4])}',
-                                        '{sent_transaction[3]}', '{receieved_transaction[4]}', 1, 1, '{str(error)}')""")
+                                        unanimous_agreement, error_explanation) VALUES ({int(sender_account_info[0])}, 
+                                        {int(receiver_account_info[0])}, '{timestamp}', {float(sent_transaction[2])}, {sender_account_info[2]}, 
+                                        '{str(sender_account_info[4])}', '{sent_transaction[3]}', '{receieved_transaction[4]}', 1, '{str(error)}')""")
                     error_database_connection.commit()
                     
                     #delete transaction verification record from temporary transaction database
                     sender_database_cursor.execute(
-                        f"DELETE FROM sent_transactions WHERE key = {sender_key}")
+                        f"DELETE FROM sent_transactions WHERE key = '{sender_key}'")
                     sender_dastabase_connection.commit()
                     
-                    receiver_database_cursor.execute(f"DELETE FROM received_transactions WHERE key = {receiver_key}")
+                    receiver_database_cursor.execute(f"DELETE FROM received_transactions WHERE key = '{receiver_key}'")
                     receiver_dastabase_connection.commit()
                     
 while(True):

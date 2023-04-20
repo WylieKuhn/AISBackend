@@ -7,9 +7,6 @@ from createDatabases import create_databases
 create_databases()
 
 #define database connections for reading and writing to the databases
-user_connection = sqlite3.connect("users.db")
-users = user_connection.cursor()
-
 sender_dastabase_connection = sqlite3.connect("sender_transactions.db")
 sender_database_cursor = sender_dastabase_connection.cursor()
 
