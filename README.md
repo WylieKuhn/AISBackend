@@ -15,3 +15,5 @@ create_databases.py: This program runs when the main file is launched and simply
 error_generator.py: This program inserts a transaction half into each side of the transaction tables with a matching UUID key but with different sender user ID's and expected transaction amounts. This will cause a mismatch error between both the sender's user ID as well as the expected transaction amount. This is to demonstrate that the error checking and logging works.
 
 reset.py: This program simply exists as an easy way to reset the databases for demonstration purposes. Check before using.
+
+create_account.py: This program simulates creating a new account on the app by asking for an initial balance, account type, and bank name, then generates a new user ID and account ID and sending the information to the API as a JSON payload.
