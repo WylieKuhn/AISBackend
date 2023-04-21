@@ -119,12 +119,12 @@ def complete_transactions():
             if expected_amount != paid_amount:
                 error = "ERROR CODE 300, TRANSACTION AMOUNT MISMATCH: "
                 
-            error_database_cursor.execute(F"""INSERT INTO errors (account_number_sender, account_number_receiver,
+                error_database_cursor.execute(F"""INSERT INTO errors (account_number_sender, account_number_receiver,
                                 transaction_timestamp, transfer_amount, beginning_balance_sender, bank_sender, os_sender, os_receiver,
                                 unanimous_agreement, error_explanation, error_code, transaction_id) VALUES ({int(sender_account_info[0])}, 
                                 {int(receiver_account_info[0])}, '{timestamp}', {float(sent_transaction[2])}, {sender_account_info[2]}, 
                                 '{str(sender_account_info[4])}', '{sent_transaction[3]}', '{receieved_transaction[4]}', 1, '{str(error)}', 300, '{sender_key}')""")
-            error_database_connection.commit()
+                error_database_connection.commit()
             
             sender_database_cursor.execute(
                 f"DELETE FROM sent_transactions WHERE key = '{sender_key}'")
