@@ -96,9 +96,9 @@ def complete_transactions():
                         #insert final permanent trasaction record into the finished transactions databse
                         error_database_cursor.execute(F"""INSERT INTO errors (account_number_sender, account_number_receiver,
                                             transaction_timestamp, transfer_amount, beginning_balance_sender, bank_sender, os_sender, os_receiver,
-                                            unanimous_agreement, error_explanation, error_code) VALUES ({int(sender_account_info[0])}, 
+                                            unanimous_agreement, error_explanation, error_code, transaction_id) VALUES ({int(sender_account_info[0])}, 
                                             {int(receiver_account_info[0])}, '{timestamp}', {float(sent_transaction[2])}, {sender_account_info[2]}, 
-                                            '{str(sender_account_info[4])}', '{sent_transaction[3]}', '{receieved_transaction[4]}', 1, '{str(error)}', 100)""")
+                                            '{str(sender_account_info[4])}', '{sent_transaction[3]}', '{receieved_transaction[4]}', 1, '{str(error)}', 100, '{sender_key}')""")
                         error_database_connection.commit()
                         
                         #delete transaction verification record from temporary transaction database
