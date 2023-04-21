@@ -10,6 +10,8 @@ def create_account():
     balance = float(input("Initial Balance: "))
     account_type = str(input("Account type: "))
     bank_sender = str(input("Bank sender: "))
-    requests.post(f"http://127.0.0.1:8000/api/v1/create/{user_id}/{account_number}/{balance}/{account_type}/{bank_sender}")
+    
+    new_account = {"user_id": user_id, "account_number": account_number, "balance": balance, "account_type": account_type, "bank_sender": bank_sender}
+    requests.post("http://127.0.0.1:8000/api/v1/create/", json=new_account)
     
 create_account()
