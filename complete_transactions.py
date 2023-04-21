@@ -137,5 +137,5 @@ def complete_transactions():
                     
 while(True):
     complete_transactions()
-    time.sleep(2)
+    time.sleep(1)
     
