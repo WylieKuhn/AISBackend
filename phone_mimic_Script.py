@@ -2,7 +2,14 @@ import requests
 import platform
 import uuid
 from datetime import datetime
+import ssl
+import warnings
+from requests.packages.urllib3.exceptions import SubjectAltNameWarning
 
+warnings.filterwarnings("ignore", category=SubjectAltNameWarning)
+
+context = ssl.create_default_context()
+context.load_verify_locations('cert.pem')
 # get sender and receiver operating systems
 sender_os = str(platform.platform())
 reciever_os = str(platform.platform())
@@ -25,9 +32,9 @@ receiver = {"key": str(key), "user_id": 2234567890, "sender_id": sender['user_id
 
 
 # send sender transaction half to the API
-requests.post("http://127.0.0.1:8000/api/v1/send/", json = sender, timeout=3)
+requests.post("https://127.0.0.1:8000/api/v1/send/", json = sender, verify="cert.pem", timeout=3)
 
 
 # send reciever transaction half to the API
-requests.post("http://127.0.0.1:8000/api/v1/recieve/", json = receiver, timeout=3)
+requests.post("https://127.0.0.1:8000/api/v1/recieve/", json = receiver, verify="cert.pem", timeout=3)
 
