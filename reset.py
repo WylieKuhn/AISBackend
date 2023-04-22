@@ -23,7 +23,10 @@ cur.execute("DELETE FROM received_transactions WHERE user_id = 2234567890")
 database_connection.commit()
 
 
-cur.execute("DELETE FROM errors WHERE account_number_sender = 1234567890;")
+cur.execute("DELETE FROM errors WHERE account_number_sender = 222222222222222222;")
+database_connection.commit()
+
+cur.execute("DELETE FROM accounts WHERE account_type = 'SAVINGS'")
 database_connection.commit()
 
 
