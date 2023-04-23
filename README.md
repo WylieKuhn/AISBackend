@@ -6,7 +6,7 @@
   
 ## Secure!  
 - Fully HTTPS encrypted between the simulated phones and the API endpoints.  
-- API requests authorized by API keys included in the post request from the simulated phones.  
+- API requests authorized by API keys included in the post request from the simulated phones, icluding [salting](https://www.techtarget.com/searchsecurity/definition/salt) and hashing.  
 - Data sent via [JSON](https://en.wikipedia.org/wiki/JSON) payload.  
   
 ## Features!  
@@ -17,7 +17,7 @@
   
 ## Above and Beyond!  
 - Contains the data fields required by the data science prompt, because at a real company, the data scientists would have worked with us on this requirement.  
-- Allows for account creation by auto generating an API key, [salt](https://www.techtarget.com/searchsecurity/definition/salt), and full hash of them combined so the new user can by fully authenticated in the future.  
+- Allows for account creation by auto generating an API key, salt, and full hash of them combined so the new user can by fully authenticated in the future.  
   
 ## Assumptions Made  
 - The data transfer between the simulated phones is conducted via 256 bit encrypted AES signal.  
