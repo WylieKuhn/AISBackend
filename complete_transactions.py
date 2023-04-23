@@ -76,6 +76,7 @@ def complete_transactions():
             sender_id = sent_transaction[1]
             expected_amount = float(receieved_transaction[3])
             paid_amount = float(sent_transaction[2])
+            
             # get time of transaction
             timestamp = str(sent_transaction[4])
 
