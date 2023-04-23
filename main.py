@@ -40,6 +40,8 @@ class NewAccount(BaseModel):
     balance: int
     account_type: str
     bank_sender: str
+    salt: str
+    hashed_api_key: str
     
 
 #receive sender's half of the transaction information and store it to the temporary database
@@ -104,9 +106,9 @@ async def recieve(received_transaction: ReceivedTransaction, api_key: str = Secu
 #create new account
 @app.post("/api/v1/create/")
 async def create_user(account: NewAccount):
-    cur.execute("""INSERT INTO accounts (user_id, account_number, account_balance, account_type, bank_sender) 
-                            VALUES (?, ?, ?, ?, ?)""", (account.user_id, account.account_number, account.balance, 
-                                                        account.account_type, account.bank_sender))
+    cur.execute("""INSERT INTO accounts (user_id, account_number, account_balance, account_type, bank_sender, api_hash, salt) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)""", (account.user_id, account.account_number, account.balance, 
+                account.account_type, account.bank_sender, account.hashed_api_key, account.salt))
     database_connection.commit()
 
 
