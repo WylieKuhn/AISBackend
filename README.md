@@ -1,28 +1,32 @@
 # My Submission for AIS-A-Thon. Created a backend simulating 2 phones tapping together to send a payment from one phone app's account to the other  
   
-## FEATURES!
+## The Framework!
 - Built on [FasAPI](https://fastapi.tiangolo.com/), a Python framework for building, well, fast API's!  
-- It runs on [Uvicorn](https://www.uvicorn.org/), An ASGI web server for Python.
+- It runs on [Uvicorn](https://www.uvicorn.org/), An ASGI web server for Python.  
+  
+## Secure!  
 - Fully HTTPS encrypted between the simulated phones and the API endpoints.  
 - API requests authorized by API keys included in the post request from the simulated phones.  
-- Data sent via [JSON](https://en.wikipedia.org/wiki/JSON) payload.    
+- Data sent via [JSON](https://en.wikipedia.org/wiki/JSON) payload.  
+  
+## Features!  
 - Updates account balances!  
-- Logs the transaction information.  
-- Logs errors when they occur.  
-- Deletes transactions older than 5 minutes from the temporary transaction half databases to maintain up to date information.  
+- Logs the transaction information!  
+- Logs errors when they occur!  
+- Deletes transactions older than 5 minutes from the temporary transaction half databases to maintain up to date information!  
   
 ## Above and Beyond!
-- Contains the data fields required by the data science prompt, because at a real company, the data scientists would have worked with us on this requirment.  
-- Allows for account createion by auto generating an API key, [salt](https://www.techtarget.com/searchsecurity/definition/salt), and full hash of them combined so the new user can by fully authenticated in the future.
-
-## Assumptions Made
+- Contains the data fields required by the data science prompt, because at a real company, the data scientists would have worked with us on this requirment!  
+- Allows for account createion by auto generating an API key, [salt](https://www.techtarget.com/searchsecurity/definition/salt), and full hash of them combined so the new user can by fully authenticated in the future!  
+  
+## Assumptions Made  
 - The data transfer between the simulated phones is conducted via 256 bit encrypted AES signal.  
 - Both users have already agreed to the transactions by pressing the UI to send and receive the NFC signal containing the transaction information.  
 - App would have a function to detect if it can connect to the main server first, so transactions could not be sent at seperate times.  
-- The [SQLite3](https://en.wikipedia.org/wiki/SQLite) databases used in the current program would actually be secure full SQL databases like PostgreSQL in a company with actual funding and experts, secured with a password and encrypted.
-
+- The [SQLite3](https://en.wikipedia.org/wiki/SQLite) databases used in the current program would actually be secure full SQL databases like PostgreSQL in a company with actual funding and experts, secured with a password and encrypted.  
+  
 ## Files and Their Uses  
-
+  
 ### main.py:  
 The main backend api for the appilication. Receives user transaction data and stores the transaction halves in their respective tables. Receives account creation data and stores it to the accounts table. verifies request authenticity via API key in the header by taking the key, adding it to the salt from the account with the matching user ID, hashing it using the [SHA3-512](https://en.wikipedia.org/wiki/SHA-3) hasing algorithm, and comparing the resulting hash to the API hash of the account.  
   
