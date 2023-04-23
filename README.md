@@ -6,7 +6,7 @@
   
 ## Secure!  
 - Fully HTTPS encrypted between the simulated phones and the API endpoints.  
-- API requests authorized by API keys included in the post request from the simulated phones, icluding [salting](https://www.techtarget.com/searchsecurity/definition/salt) and hashing.  
+- API requests authorized by API keys included in the post request from the simulated phones, icluding [salting](https://www.techtarget.com/searchsecurity/definition/salt) and [hashing](https://en.wikipedia.org/wiki/SHA-3).  
 - Data sent via [JSON](https://en.wikipedia.org/wiki/JSON) payload.  
   
 ## Features!  
