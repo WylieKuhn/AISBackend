@@ -4,6 +4,7 @@
 - Built on [FasAPI](https://fastapi.tiangolo.com/), a Python framework for building, well, fast API's!  
 - It runs on [Uvicorn](https://www.uvicorn.org/), An ASGI web server for Python.
 - Fully HHTPS encrypted between the simulated phones and the API endpoints.  
+- API requests authorized by API keys included in the post request from the simulated phones.  
 - Data sent via [JSON](https://en.wikipedia.org/wiki/JSON) payload.  
 - Contains the data fields required by the data science prompt, because at a real company, the data scientists would have worked with us on this requirment.  
 - Updates account balances!  
