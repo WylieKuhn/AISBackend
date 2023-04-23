@@ -5,7 +5,7 @@ def create_databases() -> None:
     cur = database_connection.cursor()
     
     cur.execute("""CREATE TABLE IF NOT EXISTS accounts (user_id BIGINT, account_number BIGINT, account_balance DOUBLE(7, 2),
-                            account_type TEXT, bank_sender TEXT)"""
+                            account_type TEXT, bank_sender TEXT, api_hash, salt)"""
                             )
     database_connection.commit()
     
@@ -26,6 +26,10 @@ def create_databases() -> None:
                         transfer_amount FLOAT(2), beginning_balance_sender DOUBLE(7, 2), bank_sender TEXT, os_sender TEXT, os_receiver TEXT,
                         unanimous_agreement int, error_explanation TEXT, error_code INT, transaction_id TEXT)""")
     database_connection.commit()
+    
+    cur.execute("CREATE TABLE IF NOT EXISTS api_failures (attempted_api_key TEXT, sender_id BIGINT, receiver_id BIGINT, transfer_amount DOUBLE (7, 2), operating_system TEXT, timestamp TEXT, endpoint TEXT)")
+    database_connection.commit()
+
     
 create_databases()
     

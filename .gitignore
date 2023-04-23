@@ -16,3 +16,7 @@ key.pem
 uvicorn command.txt
 
 Wylie.crt
+
+key_file.py
+
+requirements.txt
