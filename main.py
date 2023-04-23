@@ -82,10 +82,11 @@ async def recieve(received_transaction: ReceivedTransaction, api_key: str = Secu
     hashed_api_key = hashlib.sha3_512(to_hash.encode()).hexdigest()
     
     if receiver_account[5] == hashed_api_key:
+        time_received = str(datetime.now())
         cur.execute(
-            """INSERT INTO received_transactions (key, user_id, sender_id, expected_amount, receiver_os)
-            VALUES (?, ?, ?, ?, ?)""", (received_transaction.key, received_transaction.user_id, received_transaction.sender_id, 
-            received_transaction.expected_amount, received_transaction.os_receiver))
+            """INSERT INTO received_transactions (key, user_id, sender_id, expected_amount, receiver_os, transaction_time)
+            VALUES (?, ?, ?, ?, ?, ?)""", (received_transaction.key, received_transaction.user_id, received_transaction.sender_id, 
+            received_transaction.expected_amount, received_transaction.os_receiver, time_received))
         database_connection.commit()
     
     if receiver_account[5] != hashed_api_key:

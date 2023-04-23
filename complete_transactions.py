@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime, timedelta
 import time
 
 database_connection = sqlite3.connect("app_database.db")
@@ -12,9 +13,60 @@ def complete_transactions():
     received_transactions = cur.fetchall()
     cur.execute("""SELECT * FROM sent_transactions""")
     sent_transactions = cur.fetchall()
+    time_of_check = datetime.now()
 
     for receieved_transaction in received_transactions:
+        
+        if receieved_transaction[5]:
+            received_time = datetime.strptime(receieved_transaction[5], "%Y-%m-%d %H:%M:%S.%f")
+            if received_time < time_of_check-timedelta(minutes=5):
+                error = "ERROR 500: TRANSACTION TIMEOUT"
+                cur.execute("DELETE FROM received_transactions WHERE key = ?", (str(receieved_transaction[0]), ))
+                database_connection.commit()
+                print("TIME ERROR SUCCESS")
+                
+                cur.execute("SELECT * FROM accounts WHERE user_id = ?", (receieved_transaction[1], ))
+                r_account = cur.fetchone()
+                cur.execute("SELECT * FROM accounts WHERE user_id = ?", (receieved_transaction[2], ))
+                s_account = cur.fetchone()
+                
+                
+                cur.execute("""INSERT INTO errors (account_number_sender, account_number_receiver,
+                            transaction_timestamp, transfer_amount, beginning_balance_sender, bank_sender, os_sender, os_receiver,
+                            unanimous_agreement, error_explanation, error_code, transaction_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                            (r_account[1], s_account[1], receieved_transaction[5], receieved_transaction[3], s_account[2],
+                            s_account[4], 'None', receieved_transaction[4], 1, error, 500, receieved_transaction[0]))
+                database_connection.commit()
+    
+    for sent_transaction in sent_transactions:
+        if sent_transaction[4]:
+            sent_time = datetime.strptime(sent_transaction[4], "%Y-%m-%d %H:%M:%S.%f")
+            if sent_time < time_of_check-timedelta(minutes=5):
+                error = "ERROR 500: TRANSACTION TIMEOUT"
+                cur.execute("DELETE FROM sent_transactions WHERE key = ?", (str(sent_transaction[0]), ))
+                database_connection.commit()
+                print("TIME ERROR SUCCESS")
+                
+                cur.execute("SELECT * FROM accounts WHERE user_id = ?", (sent_transaction[1], ))
+                s_account = cur.fetchone()
+                
+                
+                cur.execute("""INSERT INTO errors (account_number_sender, account_number_receiver,
+                            transaction_timestamp, transfer_amount, beginning_balance_sender, bank_sender, os_sender, os_receiver,
+                            unanimous_agreement, error_explanation, error_code, transaction_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                            (s_account[1], 0, sent_transaction[4], sent_transaction[2], s_account[2],
+                            s_account[4], sent_transaction[3], 'None', 1, error, 500, sent_transaction[0]))
+                database_connection.commit()
+                
+                
+                
+    
+    cur.execute("""SELECT * FROM received_transactions""")
+    received_transactions = cur.fetchall()
+    cur.execute("""SELECT * FROM sent_transactions""")
+    sent_transactions = cur.fetchall()
 
+    for receieved_transaction in received_transactions:
         for sent_transaction in sent_transactions:
 
             receiver_key = str(receieved_transaction[0])

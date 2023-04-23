@@ -14,7 +14,7 @@ def create_databases() -> None:
     database_connection.commit()
     
     cur.execute(
-        """CREATE TABLE IF NOT EXISTS received_transactions (key TEXT, user_id BIGINT, sender_id BIGINT, expected_amount DOUBLE(7, 2), receiver_os TEXT)""")
+        """CREATE TABLE IF NOT EXISTS received_transactions (key TEXT, user_id BIGINT, sender_id BIGINT, expected_amount DOUBLE(7, 2), receiver_os TEXT, transaction_time TEXT)""")
     database_connection.commit()
     
     cur.execute("""CREATE TABLE IF NOT EXISTS finished_transactions (transaction_key TEXT, account_number_sender BIGINT, account_number_receiver BIGINT, transaction_timestamp TEXT,
