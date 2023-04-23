@@ -9,11 +9,13 @@
 - Contains the data fields required by the data science prompt, because at a real company, the data scientists would have worked with us on this requirment.  
 - Updates account balances!  
 - Logs the transaction information.  
-- Logs errors when they occur. 
+- Logs errors when they occur.  
+- Deletes transactions older than 5 minutes from the temporary transaction half databases to maintain up to date information.  
 
 ## Assumptions Made
 - The data transfer between the simulated phones is conducted via 256 bit encrypted AES signal.  
 - Both users have already agreed to the transactions by pressing the UI to send and receive the NFC signal containing the transaction information.  
+- App would have a function to detect if it can connect to the main server first, so transactions could not be sent at seperate times.  
 - The [SQLite3](https://en.wikipedia.org/wiki/SQLite) databases used in the current program would actually be secure full SQL databases like PostgreSQL in a company with actual funding and experts, secured with a password and encrypted.
 
 ## Files and Their Uses  
