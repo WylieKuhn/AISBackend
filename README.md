@@ -3,7 +3,7 @@
 ## FEATURES!
 - Built on [FasAPI](https://fastapi.tiangolo.com/), a Python framework for building, well, fast API's!  
 - It runs on [Uvicorn](https://www.uvicorn.org/), An ASGI web server for Python.
-- Fully HHTPS encrypted between the simulated phones and the API endpoints.  
+- Fully HTTPS encrypted between the simulated phones and the API endpoints.  
 - API requests authorized by API keys included in the post request from the simulated phones.  
 - Data sent via [JSON](https://en.wikipedia.org/wiki/JSON) payload.  
 - Contains the data fields required by the data science prompt, because at a real company, the data scientists would have worked with us on this requirment.  
@@ -21,7 +21,7 @@
 ## Files and Their Uses  
 
 ### main.py:  
-The main backend api for the appilication. Receives user transaction data and stores the transaction halves in their respective tables. Also receives account creation data and stores it to the accounts table.  
+The main backend api for the appilication. Receives user transaction data and stores the transaction halves in their respective tables. Receives account creation data and stores it to the accounts table. verifies request authenticity via API key in the header by taking the key, adding it to the salt from the account with the matching user ID, hashing it using the [SHA3-512](https://en.wikipedia.org/wiki/SHA-3) hasing algorithm, and comparing the resulting hash to the API hash of the account.  
   
 The file will need to run from the command line using `uvicorn main:app --reload --host 127.0.0.1 --port 8000 --ssl-certfile="cert.pem" --ssl-keyfile="key.pem"`  
   
@@ -39,10 +39,13 @@ This program mimics a transaction between 2 phones by generating a unique [UUID]
 This program runs when the main file is launched and simply creates the needed database and tables if they do not exist.  
   
 ### error_generator.py:  
-This program inserts a transaction half into each side of the transaction tables with a matching UUID key but with different sender user ID's and expected transaction amounts. This will cause a mismatch error between both the sender's user ID as well as the expected transaction amount. This is to demonstrate that the error checking and logging works.  
+This program simulates a sender user ID and expected balance mismatch by inserting a transaction into each of the transaction tables with a matching UUID key but with different sender user ID's and expected transaction amounts. This will cause a mismatch error between both the sender's user ID as well as the expected transaction amount. This is to demonstrate that the error checking and logging works.  
   
 ### reset.py:  
 This program simply exists as an easy way to reset the databases for demonstration purposes. Check before using.  
   
 ### create_account.py:  
 This program simulates creating a new account on the app by asking for an initial balance, account type, and bank name, then generates a new user ID and account ID and sending the information to the API as a JSON payload.  
+  
+### time_error.py:  
+This program simulates a transaction timeout scenario by inserting a transaction into each half of the transaction tables with a time that is 10 minutes in the past.
