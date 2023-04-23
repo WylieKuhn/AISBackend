@@ -5,12 +5,15 @@
 - It runs on [Uvicorn](https://www.uvicorn.org/), An ASGI web server for Python.
 - Fully HTTPS encrypted between the simulated phones and the API endpoints.  
 - API requests authorized by API keys included in the post request from the simulated phones.  
-- Data sent via [JSON](https://en.wikipedia.org/wiki/JSON) payload.  
-- Contains the data fields required by the data science prompt, because at a real company, the data scientists would have worked with us on this requirment.  
+- Data sent via [JSON](https://en.wikipedia.org/wiki/JSON) payload.    
 - Updates account balances!  
 - Logs the transaction information.  
 - Logs errors when they occur.  
 - Deletes transactions older than 5 minutes from the temporary transaction half databases to maintain up to date information.  
+  
+## Above and Beyond!
+- Contains the data fields required by the data science prompt, because at a real company, the data scientists would have worked with us on this requirment.  
+- Allows for account createion by auto generating an API key, salt, and full hash of them combined so the new user can by fully authenticated in the future.
 
 ## Assumptions Made
 - The data transfer between the simulated phones is conducted via 256 bit encrypted AES signal.  
