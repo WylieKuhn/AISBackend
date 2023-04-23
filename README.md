@@ -1,5 +1,22 @@
-# AISBackend
-Submission for AIS-A-Thon. Created a backend simulating 2 phones tapping together to send a payment from one phone app's account to the other
+# My Submission for AIS-A-Thon. Created a backend simulating 2 phones tapping together to send a payment from one phone app's account to the other  
+  
+## FEATURES!
+- Built on [FasAPI](https://fastapi.tiangolo.com/), a Python framework for building, well, fast API's!  
+- It runs on [Uvicorn](https://www.uvicorn.org/), An ASGI web server for Python.
+- Fully HHTPS encrypted between the simulated phones and the API endpoints.  
+- Data sent via JSON payload.  
+- Contains the data fields required by the data science prompt, because at a real company, the data scientists would have worked with us on this requirment.  
+- Updates account balances!  
+- Logs the transaction information.  
+- Logs errors when they occur. 
+
+## Assumptions Made
+- The data transfer between the simulated phones is conducted via 256 bit encrypted AES signal.  
+- Both users have already agreed to the transactions by pressing the UI to send and receive the NFC signal containing the transaction information.  
+
+ 
+
+
 
 
 FILES AND THEIR USES:
