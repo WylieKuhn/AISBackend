@@ -16,13 +16,13 @@
 - Deletes transactions older than 5 minutes from the temporary transaction half databases to maintain up to date information.  
   
 ## Above and Beyond!  
-- Contains the data fields required by the data science prompt, because at a real company, the data scientists would have worked with us on this requirment.  
-- Allows for account createion by auto generating an API key, [salt](https://www.techtarget.com/searchsecurity/definition/salt), and full hash of them combined so the new user can by fully authenticated in the future.  
+- Contains the data fields required by the data science prompt, because at a real company, the data scientists would have worked with us on this requirement.  
+- Allows for account creation by auto generating an API key, [salt](https://www.techtarget.com/searchsecurity/definition/salt), and full hash of them combined so the new user can by fully authenticated in the future.  
   
 ## Assumptions Made  
 - The data transfer between the simulated phones is conducted via 256 bit encrypted AES signal.  
 - Both users have already agreed to the transactions by pressing the UI to send and receive the NFC signal containing the transaction information.  
-- App would have a function to detect if it can connect to the main server first, so transactions could not be sent at seperate times.  
+- App would have a function to detect if it can connect to the main server first, so transactions could not be sent at separate times.  
 - The [SQLite3](https://en.wikipedia.org/wiki/SQLite) databases used in the current program would actually be secure full SQL databases like PostgreSQL in a company with actual funding and experts, secured with a password and encrypted.  
   
 ## Files and Their Uses  
