@@ -52,7 +52,7 @@ This program simulates a sender user ID and expected balance mismatch by inserti
 This program simply exists as an easy way to reset the databases for demonstration purposes. Check before using.  
   
 ### create_account.py:  
-This program simulates creating a new account on the app by asking for an initial balance, account type, and bank name, then generates a new user ID and account ID and sending the information to the API as a JSON payload.  
+This program simulates creating a new account on the app by asking for an initial balance, account type, and bank name, then generates a new user ID and account ID, API key, salt, main hash, and sending the information to the API as a JSON payload. The API key itself is not transmitted. Just the salt and main hash so even if an attacker steals these they cannot gain access to the API endpoints.  
   
 ### time_error.py:  
 This program simulates a transaction timeout scenario by inserting a transaction into each half of the transaction tables with a time that is 10 minutes in the past.
